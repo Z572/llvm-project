@@ -515,7 +515,15 @@ bool RISCVPreRAExpandPseudo::expandLoadLocalAddress(
 bool RISCVPreRAExpandPseudo::expandLoadGlobalAddress(
     MachineBasicBlock &MBB, MachineBasicBlock::iterator MBBI,
     MachineBasicBlock::iterator &NextMBBI) {
-  unsigned SecondOpcode = STI->is64Bit() ? RISCV::LD : RISCV::LW;
+  unsigned SecondOpcode;
+  if (STI->is64Bit())
+    if (STI->getTargetABI() == RISCVABI::ABI_ILP32)
+      SecondOpcode = RISCV::LWU;
+    else
+      SecondOpcode = RISCV::LD;
+  else
+    SecondOpcode = RISCV::LW;
+
   return expandAuipcInstPair(MBB, MBBI, NextMBBI, RISCVII::MO_GOT_HI,
                              SecondOpcode);
 }
