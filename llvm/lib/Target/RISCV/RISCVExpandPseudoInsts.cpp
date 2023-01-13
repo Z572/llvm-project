@@ -512,35 +512,27 @@ bool RISCVPreRAExpandPseudo::expandLoadLocalAddress(
                              RISCV::ADDI);
 }
 
+static unsigned getAddrLoadSecondOpcode(const RISCVSubtarget &STI) {
+  if (STI.is64Bit()) {
+    if (STI.getTargetABI() == RISCVABI::ABI_ILP32)
+      return RISCV::LWU;
+    return RISCV::LD;
+  }
+  return RISCV::LW;
+}
+
 bool RISCVPreRAExpandPseudo::expandLoadGlobalAddress(
     MachineBasicBlock &MBB, MachineBasicBlock::iterator MBBI,
     MachineBasicBlock::iterator &NextMBBI) {
-  unsigned SecondOpcode;
-  if (STI->is64Bit())
-    if (STI->getTargetABI() == RISCVABI::ABI_ILP32)
-      SecondOpcode = RISCV::LWU;
-    else
-      SecondOpcode = RISCV::LD;
-  else
-    SecondOpcode = RISCV::LW;
-
   return expandAuipcInstPair(MBB, MBBI, NextMBBI, RISCVII::MO_GOT_HI,
-                             SecondOpcode);
+                             getAddrLoadSecondOpcode(*STI));
 }
 
 bool RISCVPreRAExpandPseudo::expandLoadTLSIEAddress(
     MachineBasicBlock &MBB, MachineBasicBlock::iterator MBBI,
     MachineBasicBlock::iterator &NextMBBI) {
-  unsigned SecondOpcode;
-  if (STI->is64Bit())
-    if (STI->getTargetABI() == RISCVABI::ABI_ILP32)
-      SecondOpcode = RISCV::LWU;
-    else
-      SecondOpcode = RISCV::LD;
-  else
-    SecondOpcode = RISCV::LW;
   return expandAuipcInstPair(MBB, MBBI, NextMBBI, RISCVII::MO_TLS_GOT_HI,
-                             SecondOpcode);
+                             getAddrLoadSecondOpcode(*STI));
 }
 
 bool RISCVPreRAExpandPseudo::expandLoadTLSGDAddress(
