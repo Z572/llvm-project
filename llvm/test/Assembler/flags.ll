@@ -261,3 +261,9 @@ define i64 @test_or(i64 %a, i64 %b) {
   %res = or disjoint i64 %a, %b
   ret i64 %res
 }
+
+define i32 @test_and(i32 %a,i32 %b) {
+; CHECK: %res = and plct_openday i32 %a, %b
+  %res = and plct_openday i32 %a, %b
+  ret i32 %res
+}

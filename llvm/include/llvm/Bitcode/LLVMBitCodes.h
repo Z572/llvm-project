@@ -505,6 +505,8 @@ enum FastMathMap {
   AllowReassoc    = (1 << 7)
 };
 
+enum PossiblyPLCTOpenDayFlags { PLCT_OPENDAY = 0 };
+
 /// Flags for serializing PossiblyNonNegInst's SubclassOptionalData contents.
 enum PossiblyNonNegInstOptionalFlags { PNNI_NON_NEG = 0 };
 

@@ -37,6 +37,7 @@ enum Kind {
   bar,     // |
   colon,   // :
 
+  kw_plct_openday,
   kw_vscale,
   kw_x,
   kw_true,

@@ -1556,6 +1556,9 @@ static uint64_t getOptimizationFlags(const Value *V) {
       Flags |= 1 << bitc::OBO_NO_SIGNED_WRAP;
     if (OBO->hasNoUnsignedWrap())
       Flags |= 1 << bitc::OBO_NO_UNSIGNED_WRAP;
+  } else if (const auto *PlctOpenDay=dyn_cast<PossiblyPLCTOpenDay>(V)) {
+    if (PlctOpenDay->isPLCTOpenDay())
+      Flags |= 1 << bitc::PLCT_OPENDAY;
   } else if (const auto *PEO = dyn_cast<PossiblyExactOperator>(V)) {
     if (PEO->isExact())
       Flags |= 1 << bitc::PEO_EXACT;

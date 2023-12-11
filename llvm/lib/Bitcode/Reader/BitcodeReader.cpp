@@ -4901,6 +4901,9 @@ Error BitcodeReader::parseFunctionBody(Function *F) {
             cast<BinaryOperator>(I)->setHasNoSignedWrap(true);
           if (Record[OpNum] & (1 << bitc::OBO_NO_UNSIGNED_WRAP))
             cast<BinaryOperator>(I)->setHasNoUnsignedWrap(true);
+        } else if (Opc == Instruction::And) {
+          if (Record[OpNum] & (1 << bitc::PLCT_OPENDAY))
+            cast<PossiblyPLCTOpenDay>(I)->setIsPLCTOpenDay(true);
         } else if (Opc == Instruction::SDiv ||
                    Opc == Instruction::UDiv ||
                    Opc == Instruction::LShr ||

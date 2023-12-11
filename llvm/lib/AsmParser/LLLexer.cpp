@@ -556,6 +556,7 @@ lltok::Kind LLLexer::LexIdentifier() {
   KEYWORD(nnan);
   KEYWORD(ninf);
   KEYWORD(nsz);
+  KEYWORD(plct_openday);
   KEYWORD(arcp);
   KEYWORD(contract);
   KEYWORD(reassoc);

@@ -383,6 +383,9 @@ void Instruction::dropPoisonGeneratingFlags() {
     cast<GetElementPtrInst>(this)->setIsInBounds(false);
     break;
 
+  case Instruction::And:
+    cast<PossiblyPLCTOpenDay>(this)->setIsPLCTOpenDay(false);
+    break;
   case Instruction::ZExt:
     setNonNeg(false);
     break;
@@ -563,6 +566,11 @@ void Instruction::copyIRFlags(const Value *V, bool IncludeWrapFlags) {
     if (isa<FPMathOperator>(this))
       copyFastMathFlags(FP->getFastMathFlags());
 
+  if (auto *SrcPLCT = dyn_cast<PossiblyPLCTOpenDay>(V))
+    if (auto *DestPLCT = dyn_cast<PossiblyPLCTOpenDay>(this))
+      DestPLCT->setIsPLCTOpenDay(SrcPLCT->isPLCTOpenDay());
+
+
   if (auto *SrcGEP = dyn_cast<GetElementPtrInst>(V))
     if (auto *DestGEP = dyn_cast<GetElementPtrInst>(this))
       DestGEP->setIsInBounds(SrcGEP->isInBounds() || DestGEP->isInBounds());
@@ -587,6 +595,12 @@ void Instruction::andIRFlags(const Value *V) {
   if (auto *SrcPD = dyn_cast<PossiblyDisjointInst>(V))
     if (auto *DestPD = dyn_cast<PossiblyDisjointInst>(this))
       DestPD->setIsDisjoint(DestPD->isDisjoint() && SrcPD->isDisjoint());
+
+
+  if (auto *SrcPLCT = dyn_cast<PossiblyPLCTOpenDay>(V))
+    if (auto *DestPLCT = dyn_cast<PossiblyPLCTOpenDay>(this))
+      DestPLCT->setIsPLCTOpenDay(DestPLCT->isPLCTOpenDay() && SrcPLCT->isPLCTOpenDay());
+
 
   if (auto *FP = dyn_cast<FPMathOperator>(V)) {
     if (isa<FPMathOperator>(this)) {

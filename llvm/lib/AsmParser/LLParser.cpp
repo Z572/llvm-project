@@ -32,6 +32,7 @@
 #include "llvm/IR/GlobalIFunc.h"
 #include "llvm/IR/GlobalObject.h"
 #include "llvm/IR/InlineAsm.h"
+#include "llvm/IR/InstrTypes.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/Intrinsics.h"
 #include "llvm/IR/LLVMContext.h"
@@ -6407,7 +6408,14 @@ int LLParser::parseInstruction(Instruction *&Inst, BasicBlock *BB,
       cast<PossiblyDisjointInst>(Inst)->setIsDisjoint(true);
     return false;
   }
-  case lltok::kw_and:
+  case lltok::kw_and: {
+    bool PLCTOpenDay = EatIfPresent(lltok::kw_plct_openday);
+    if (parseLogical(Inst, PFS, KeywordVal))
+      return true;
+    if (PLCTOpenDay)
+      cast<PossiblyPLCTOpenDay>(Inst)->setIsPLCTOpenDay(true);
+    return false;
+  }
   case lltok::kw_xor:
     return parseLogical(Inst, PFS, KeywordVal);
   case lltok::kw_icmp:

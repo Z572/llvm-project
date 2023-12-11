@@ -1354,6 +1354,8 @@ define void @instructions.bitwise_binops(i8 %op1, i8 %op2) {
   ; none
   and i8 %op1, %op2
   ; CHECK: and i8 %op1, %op2
+  and plct_openday i8 %op1, %op2
+  ; CHECK: and plct_openday i8 %op1, %op2
   or i8 %op1, %op2
   ; CHECK: or i8 %op1, %op2
   xor i8 %op1, %op2

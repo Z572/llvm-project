@@ -1374,6 +1374,10 @@ static void WriteOptimizationInfo(raw_ostream &Out, const User *U) {
       Out << " nuw";
     if (OBO->hasNoSignedWrap())
       Out << " nsw";
+  } else if (const PossiblyPLCTOpenDay *PLCTOpenDay =
+             dyn_cast<PossiblyPLCTOpenDay>(U)){
+    if (PLCTOpenDay->isPLCTOpenDay())
+      Out << " plct_openday";
   } else if (const PossiblyExactOperator *Div =
                dyn_cast<PossiblyExactOperator>(U)) {
     if (Div->isExact())

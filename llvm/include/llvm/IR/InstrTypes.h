@@ -449,6 +449,22 @@ public:
   }
 };
 
+
+class PossiblyPLCTOpenDay : public BinaryOperator {
+public:
+  enum { IsPLCTOpenDay = (1 << 0)};
+  void setIsPLCTOpenDay(bool B) {
+    SubclassOptionalData = (SubclassOptionalData & ~IsPLCTOpenDay) | (B * IsPLCTOpenDay);
+  }
+  bool isPLCTOpenDay() const { return SubclassOptionalData & IsPLCTOpenDay; }
+  static bool classof(const Instruction *I) {
+    return I->getOpcode() == Instruction::And;
+  }
+  static bool classof(const Value *V) {
+    return isa<Instruction>(V) && classof(cast<Instruction>(V));
+  }
+};
+
 BinaryOperator *BinaryOperator::CreateDisjoint(BinaryOps Opc, Value *V1,
                                                Value *V2, const Twine &Name) {
   BinaryOperator *BO = Create(Opc, V1, V2, Name);

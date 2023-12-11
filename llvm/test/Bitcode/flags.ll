@@ -20,6 +20,8 @@ second:                                           ; preds = %first
   %ll = zext i32 %s to i64
   %jj = or disjoint i32 %a, 0
   %oo = or i32 %a, 0
+  %pp = and plct_openday i32 %a, 0
+  %qq = and i32 %a, 0
   unreachable
 
 first:                                            ; preds = %entry
@@ -32,5 +34,7 @@ first:                                            ; preds = %entry
   %rr = zext i32 %ss to i64
   %mm = or disjoint i32 %a, 0
   %nn = or i32 %a, 0
+  %tt = and plct_openday i32 %a, 0
+  %vv = and i32 %a, 0
   br label %second
 }
