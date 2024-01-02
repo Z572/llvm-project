@@ -50,7 +50,7 @@ define ptr @f1() nounwind {
 ; RV64-ILP32-PIC:       # %bb.0: # %entry
 ; RV64-ILP32-PIC-NEXT:  .Lpcrel_hi0:
 ; RV64-ILP32-PIC-NEXT:    auipc a0, %got_pcrel_hi(external_var)
-; RV64-ILP32-PIC-NEXT:    lwu a0, %pcrel_lo(.Lpcrel_hi0)(a0)
+; RV64-ILP32-PIC-NEXT:    lw a0, %pcrel_lo(.Lpcrel_hi0)(a0)
 ; RV64-ILP32-PIC-NEXT:    ret
 entry:
   ret ptr @external_var

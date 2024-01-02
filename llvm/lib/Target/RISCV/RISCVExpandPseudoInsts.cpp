@@ -512,13 +512,11 @@ bool RISCVPreRAExpandPseudo::expandLoadLocalAddress(
                              RISCV::ADDI);
 }
 
-static unsigned getAddrLoadSecondOpcode(const RISCVSubtarget &STI) {
-  if (STI.is64Bit()) {
-    if (STI.getTargetABI() == RISCVABI::ABI_ILP32)
-      return RISCV::LWU;
-    return RISCV::LD;
-  }
-  return RISCV::LW;
+static unsigned getAddrLoadSecondOpcode(const RISCVSubtarget &STI)
+{
+  if (STI.is64Bit() && (STI.getTargetABI() !=RISCVABI::ABI_ILP32))
+      return RISCV::LD;
+    return RISCV::LW;
 }
 
 bool RISCVPreRAExpandPseudo::expandLoadGlobalAddress(
