@@ -544,6 +544,7 @@ void ScalarBitSetTraits<ELFYAML::ELF_EF>::bitset(IO &IO,
     BCaseMask(EF_RISCV_FLOAT_ABI_QUAD, EF_RISCV_FLOAT_ABI);
     BCase(EF_RISCV_RVE);
     BCase(EF_RISCV_TSO);
+    BCase(EF_RISCV_X32);
     break;
   case ELF::EM_XTENSA:
     BCase(EF_XTENSA_XT_INSN);
