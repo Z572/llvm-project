@@ -110,6 +110,9 @@ void RISCVTargetELFStreamer::finish() {
     llvm_unreachable("Improperly initialised target ABI");
   }
 
+  if (Features[RISCV::Feature64Bit] && (ABI == RISCVABI::ABI_ILP32))
+    EFlags |= ELF::EF_RISCV_X32;
+
   MCA.setELFHeaderEFlags(EFlags);
 }
 
