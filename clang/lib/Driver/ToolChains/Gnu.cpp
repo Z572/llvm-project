@@ -254,7 +254,12 @@ static const char *getLDMOption(const llvm::Triple &T, const ArgList &Args) {
   case llvm::Triple::riscv32:
     return "elf32lriscv";
   case llvm::Triple::riscv64:
-    return "elf64lriscv";
+    {
+      StringRef c = tools::riscv::getRISCVABI(Args, T);
+      if (c.starts_with("ilp32"))
+        return "elf32lriscv_ilp32";
+      return "elf64lriscv";
+    };
   case llvm::Triple::sparc:
   case llvm::Triple::sparcel:
     return "elf32_sparc";
