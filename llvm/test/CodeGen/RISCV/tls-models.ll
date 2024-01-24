@@ -64,7 +64,7 @@ define ptr @f1() nounwind {
 ; RV64-ILP32:       # %bb.0: # %entry
 ; RV64-ILP32-NEXT:  .Lpcrel_hi0:
 ; RV64-ILP32-NEXT:    auipc a0, %tls_ie_pcrel_hi(unspecified)
-; RV64-ILP32-NEXT:    lwu a0, %pcrel_lo(.Lpcrel_hi0)(a0)
+; RV64-ILP32-NEXT:    lw a0, %pcrel_lo(.Lpcrel_hi0)(a0)
 ; RV64-ILP32-NEXT:    add a0, a0, tp
 ; RV64-ILP32-NEXT:    ret
 entry:
@@ -119,7 +119,7 @@ define ptr @f2() nounwind {
 ; RV64-ILP32:       # %bb.0: # %entry
 ; RV64-ILP32-NEXT:  .Lpcrel_hi1:
 ; RV64-ILP32-NEXT:    auipc a0, %tls_ie_pcrel_hi(ld)
-; RV64-ILP32-NEXT:    lwu a0, %pcrel_lo(.Lpcrel_hi1)(a0)
+; RV64-ILP32-NEXT:    lw a0, %pcrel_lo(.Lpcrel_hi1)(a0)
 ; RV64-ILP32-NEXT:    add a0, a0, tp
 ; RV64-ILP32-NEXT:    ret
 entry:
@@ -166,7 +166,7 @@ define ptr @f3() nounwind {
 ; RV64-ILP32:       # %bb.0: # %entry
 ; RV64-ILP32-NEXT:  .Lpcrel_hi2:
 ; RV64-ILP32-NEXT:    auipc a0, %tls_ie_pcrel_hi(ie)
-; RV64-ILP32-NEXT:    lwu a0, %pcrel_lo(.Lpcrel_hi2)(a0)
+; RV64-ILP32-NEXT:    lw a0, %pcrel_lo(.Lpcrel_hi2)(a0)
 ; RV64-ILP32-NEXT:    add a0, a0, tp
 ; RV64-ILP32-NEXT:    ret
 entry:
