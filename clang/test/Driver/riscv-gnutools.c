@@ -44,8 +44,13 @@
 // RUN: %clang --target=riscv64-unknown-elf --gcc-toolchain=%S/Inputs/basic_riscv64_tree -mno-relax -mrelax -fno-integrated-as %s -### -c \
 // RUN: 2>&1 | FileCheck -check-prefix=CHECK-RV64-RELAX %s
 
+// Check ilp32 on riscv64-unknown-linux-gnu
+// RUN: %clang --target=riscv64-unknown-linux-gnu -mabi ilp32  --gcc-toolchain=%S/Inputs/basic_riscv32_tree -fno-integrated-as %s -### -c \
+// RUN: 2>&1 | FileCheck -check-prefix=CHECK-RV64IMAFDC-ILP32 %s
+
 // CHECK-RV64IMAC-LP64: "{{.*}}as{{(.exe)?}}" "-mabi" "lp64" "-march" "rv64imac"
 // CHECK-RV64IMAFDC-LP64D: "{{.*}}as{{(.exe)?}}" "-mabi" "lp64d" "-march" "rv64imafdc"
+// CHECK-RV64IMAFDC-ILP32: "{{.*}}as{{(.exe)?}}" "-mabi" "ilp32" "-march" "rv64imafdc"
 // CHECK-RV64G-LP64D: "{{.*}}as{{(.exe)?}}" "-mabi" "lp64d" "-march" "rv64g"
 // CHECK-RV64-RELAX: "{{.*}}as{{(.exe)?}}"
 // CHECK-RV64-RELAX-NOT: "-mno-relax"
