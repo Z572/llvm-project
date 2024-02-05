@@ -166,6 +166,9 @@ public:
       resetDataLayout("e-m:e-p:32:32-i64:64-n32:64-S128");
       LongWidth = LongAlign = PointerWidth = PointerAlign = 32;
       IntMaxType = SignedLongLong;
+      SizeType = UnsignedInt;
+      PtrDiffType = SignedInt;
+      IntPtrType = SignedInt;
       return true;
     }
     return false;
